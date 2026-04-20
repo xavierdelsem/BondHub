@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->unsignedInteger('bondNumber');
             $table->string('bondSeries');
+            $table->date('buying_date')->nullable();
+            $table->boolean('isPrizeWon')->nullable();
+            $table->boolean('PrizeClaim')->nullable();
             // $table->index(['user_id', 'bondNumber']);
             $table->timestamps();
         });

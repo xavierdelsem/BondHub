@@ -49,6 +49,11 @@
                         </td>
                     </tr>
                 @endforeach
+                @forelse($bonds ?? [] as $bond)
+                    {{ $bond->name }}
+                @empty
+                    <p class="">No bonds found.</p>
+                @endforelse
             </tbody>
         </table>
     </div>

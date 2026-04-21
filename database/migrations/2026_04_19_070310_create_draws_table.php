@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('draws', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('drawNumber');
-            $table->date('drawDate');
-            $table->string('pdfPath');
+            $table->date('drawDate')->nullable();
+            $table->string('pdfPath')->nullable();
             $table->timestamps();
         });
 

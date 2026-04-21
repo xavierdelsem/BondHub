@@ -4,23 +4,15 @@
 
             <!-- Header -->
             <div>
-                <h1 class="text-2xl font-bold">Add New Prize Bond</h1>
+                <h1 class="text-2xl font-bold">Admin Panel</h1>
                 <p class="text-sm text-gray-400">
-                    Enter your bond details carefully
+                    Enter Draw Results Carefully
                 </p>
             </div>
 
             <!-- Form -->
             <form action="{{ route('bonds.store') }}" method="POST" class="space-y-5">
                 @csrf
-
-                <!-- Bond Series -->
-                <div>
-                    <label class="label font-medium">Bond Series</label>
-                    <input type="text" name="bondSeries" class="input input-bordered w-full focus:input-primary"
-                        placeholder="e.g. KA" value="{{ old('bondSeries') }}" required>
-                    <x-forms.error name="bondSeries" />
-                </div>
 
                 <!-- Bond Number -->
                 <div>
@@ -33,10 +25,10 @@
 
                 <!-- Buying Date -->
                 <div>
-                    <label class="label font-medium">Buying Date</label>
-                    <input type="date" name="buying_date" class="input input-bordered w-full focus:input-primary"
-                        value="{{ old('buying_date') }}">
-                    <x-forms.error name="buying_date" />
+                    <label class="label font-medium">Draw Date</label>
+                    <input type="date" name="drawDate" class="input input-bordered w-full focus:input-primary"
+                        value="{{ now()->format('Y-m-d') }}" disabled>
+                    <x-forms.error name="drawDate" />
                 </div>
 
                 <!-- Actions -->

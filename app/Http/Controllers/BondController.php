@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class BondController extends Controller
 {
-    public function index()    {
-        $bonds = Auth::user()->bonds()->latest()->paginate(10);  
-        return view('bonds.index', compact('bonds'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
+    public function index() {
+        if(auth()->check()){
+            $bonds = Auth::user()->bonds()->latest()->paginate(10);  
+            return view('index', compact('bonds'))
+                ->with('i', (request()->input('page', 1) - 1) * 10);
+        }
+        return redirect('login');
+        
     }   
     
     public function create() {
@@ -20,15 +24,15 @@ class BondController extends Controller
     
     public function store(Request $request) {
         $request->validate([
-            'bondNumber' => 'required|integer',
-            'bondSeries' => 'required|string|max:5',
+            'bondNumber' => 'required|integer|max:7',
+            'bondSeries' => 'required|string|max:6',
             'buying_date' => 'nullable|date',
         ]);
 
         Auth::user()->bonds()->create($request->all());
 
-        return redirect()->route('Bond.index')
-                        ->with('success','Bond Entry successfully.');
+        return redirect()->route('bonds.index')
+                        ->with('success','Bond Inserted successfully.');
     } 
 
     public function show(Bond $bond){
@@ -55,7 +59,7 @@ class BondController extends Controller
     public function destroy(Bond $bond) {
         $bond->delete();
 
-        return redirect()->route('Bond.index')
+        return redirect()->route('bonds.index')
                         ->with('success','Bond deleted successfully');
     }
 }

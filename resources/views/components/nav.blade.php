@@ -16,15 +16,18 @@
                 <li><a>Item 3</a></li>
             </ul>
         </div>
-        <a href="/home" class="btn btn-ghost text-xl">BondHub</a>
+        <a href="/home" class="btn btn-ghost text-xl">
+            <img src="{{ asset('storage/bondhub.jpeg') }}" alt="User Image" style="height: 30px" width="105px">
+        </a>
     </div>
     <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
             <li><a href="/home">Home</a></li>
             <li><a href="{{ route('profile.show') }}">Profile</a></li>
-            @can('view-admin')
+
+            @if (auth()->check() && auth()->user()->is_admin)
                 <li><a href="/admin">Admin</a></li>
-            @endcan
+            @endif
         </ul>
     </div>
     <div class="navbar-end">

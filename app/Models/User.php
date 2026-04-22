@@ -34,7 +34,7 @@ class User extends Authenticatable
         return $this->hasMany(Bond::class);
     }
 
-    public function draw(){
-        return $this->hasMany(Draw::class, 'draw_id')->where('is_admin', true);
+    public function draws(){
+        return $this->hasMany(Draw::class, 'user_id');
     }
 }

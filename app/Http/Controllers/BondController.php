@@ -24,7 +24,7 @@ class BondController extends Controller
     
     public function store(Request $request) {
         $request->validate([
-            'bondNumber' => 'required|integer|max:7',
+            'bondNumber' => 'required|integer',
             'bondSeries' => 'required|string|max:6',
             'buying_date' => 'nullable|date',
         ]);

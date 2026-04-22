@@ -14,8 +14,9 @@ class DrawController extends Controller
     public function index()
     {
         if(Auth::user()->is_admin){
-            $bonds = Auth::user()->bonds()->latest()->paginate(10);  
-            return view('bonds\draw', compact('bonds'))
+            
+            $draws = Auth::user()->draws()->latest()->paginate(10);  
+            return view('bonds.draw', compact('draws'))
                 ->with('i', (request()->input('page', 1) - 1) * 10);
         }
         return redirect('login');
@@ -34,10 +35,17 @@ class DrawController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'drawNumber' => 'required|integer|max:7',
+        $validated = $request->validate([
+            'drawNumber' => 'required|integer',
             'drawDate' => 'nullable|date',
         ]);
+
+        // Ensure drawDate is set if not provided by the form (e.g. if field was disabled)
+        $validated['drawDate'] ??= now()->format('Y-m-d');
+
+        Auth::user()->draws()->create($validated);
+
+        return redirect()->route('draws.index')->with('success','Bond Published successfully.');
     }
 
     /**

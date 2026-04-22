@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('draws', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->unsignedInteger('drawNumber');
             $table->date('drawDate')->nullable();
             $table->string('pdfPath')->nullable();

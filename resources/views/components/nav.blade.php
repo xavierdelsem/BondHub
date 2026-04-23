@@ -26,7 +26,7 @@
             <li><a href="{{ route('profile.show') }}">Profile</a></li>
 
             @if (auth()->check() && auth()->user()->is_admin)
-                <li><a href="/admin">Admin</a></li>
+                <li><a href="/draw">Admin</a></li>
             @endif
         </ul>
     </div>

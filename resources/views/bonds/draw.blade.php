@@ -23,6 +23,19 @@
                     <x-forms.error name="drawNumber" />
                 </div>
 
+                <div>
+                    <label class="label font-medium">Prize Position</label>
+                    <select name="prizePosition" class="select select-bordered w-full">
+                        <option value="" disabled {{ !old('prizePosition') ? 'selected' : '' }}>Select Position</option>
+                        <option value="1" {{ old('prizePosition') == 1 ? 'selected' : '' }}>1st Prize</option>
+                        <option value="2" {{ old('prizePosition') == 2 ? 'selected' : '' }}>2nd Prize</option>
+                        <option value="3" {{ old('prizePosition') == 3 ? 'selected' : '' }}>3rd Prize</option>
+                        <option value="4" {{ old('prizePosition') == 4 ? 'selected' : '' }}>4th Prize</option>
+                        <option value="5" {{ old('prizePosition') == 5 ? 'selected' : '' }}>5th Prize</option>
+                    </select>
+                    <x-forms.error name="prizePosition" />
+                </div>
+
                 <!-- Buying Date -->
                 <div>
                     <label class="label font-medium">Draw Date</label>
@@ -58,39 +71,39 @@
 
 
 
-    <div class="overflow-x-auto bg-base-200 rounded-box shadow">
-        <table class="table">
+    <div class="overflow-x-auto bg-base-200 rounded-box shadow mt-6">
+        <table class="table table-sm">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Number</th>
-                    <th>Publish Date</th>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Number</th>
+                    <th class="text-center">Prize Position</th>
+                    <th class="text-center">Publish Date</th>
                     <th class="text-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($draws as $draw)
+                @forelse ($draws as $draw)
                     <tr class="hover">
-                        <td>{{ ++$i }}</td>
-                        <td class="font-mono font-bold">{{ $draw->drawNumber }}</td>
-                        <td>{{ $draw->drawDate?->format('d M, Y') ?? 'N/A'}}</td>
+                        <td class="text-center">{{ ++$i }}</td>
+                        <td class="text-center font-mono font-bold">{{ $draw->drawNumber }}</td>
+                        <td class="text-center font-mono font-bold">{{ $draw->prizePosition }}</td>
+                        <td class="text-center">{{ $draw->drawDate?->format('d M, Y') ?? 'N/A'}}</td>
                         <td class="text-right">
-                            <div class="flex justify-end gap-2">
-                                <a href="{{ route('bond.edit', $draw) }}" class="btn btn-square btn-sm btn-ghost">Edit</a>
-                                <form action="{{ route('bond.destroy', $draw) }}" method="POST"
-                                    onsubmit="return confirm('Delete this bond?')">
+                            <div class="flex justify-end">
+                                <form action="{{ route('draw.destroy', $draw) }}" method="POST"
+                                    onsubmit="return confirm('Delete this Draw Record?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-square btn-sm btn-error btn-outline">Del</button>
+                                    <button type="submit" class="btn btn-error btn-sm btn-outline">Delete</button>
                                 </form>
                             </div>
                         </td>
                     </tr>
-                @endforeach
-                @forelse($draws ?? [] as $draw)
-                    {{ $draw->name }}
                 @empty
-                    <p class="">No bonds found.</p>
+                    <tr>
+                        <td colspan="4" class="text-center py-10 text-gray-500">No Results found.</td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>

@@ -30,11 +30,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function bonds(){
+    public function bonds()
+    {
         return $this->hasMany(Bond::class);
     }
 
-    public function draws(){
+    public function draws()
+    {
         return $this->hasMany(Draw::class, 'user_id');
     }
 }

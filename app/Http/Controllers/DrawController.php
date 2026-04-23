@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Bond;
+use App\Models\Draw;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DrawController extends Controller
 {
@@ -13,12 +14,14 @@ class DrawController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->is_admin){
-            
-            $draws = Auth::user()->draws()->latest()->paginate(10);  
+        if (Auth::user()->is_admin) {
+
+            $draws = Auth::user()->draws()->latest()->paginate(10);
+
             return view('bonds.draw', compact('draws'))
                 ->with('i', (request()->input('page', 1) - 1) * 10);
         }
+
         return redirect('login');
     }
 
@@ -36,7 +39,8 @@ class DrawController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'drawNumber' => 'required|integer',
+            'drawNumber' => 'required|integer|digits:7',
+            'prizePosition' => 'required|integer|in:1,2,3,4,5',
             'drawDate' => 'nullable|date',
         ]);
 
@@ -45,7 +49,9 @@ class DrawController extends Controller
 
         Auth::user()->draws()->create($validated);
 
-        return redirect()->route('draws.index')->with('success','Bond Published successfully.');
+        (new Bond)->updateStatus();
+
+        return redirect()->route('draws.index')->with('success', 'Bond Published successfully.');
     }
 
     /**
@@ -75,8 +81,11 @@ class DrawController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Draw $draw)
     {
-        //
+        $draw->delete();
+
+        return redirect()->route('draws.index')
+            ->with('success', 'Record deleted successfully');
     }
 }

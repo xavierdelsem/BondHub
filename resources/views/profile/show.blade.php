@@ -1,6 +1,6 @@
 <x-layout>
     <div class="max-w-5xl mx-auto py-10 px-4">
-        <h1 class="text-3xl font-bold mb-8">User Profile</h1>
+        <h1 class="text-3xl font-bold mb-8 text-secondary text-center">User Profile</h1>
 
         @if (session('success'))
             <div class="alert alert-success shadow mb-6">
@@ -14,7 +14,7 @@
 
             <!-- Basic Info -->
             <div class="bg-base-100 shadow rounded-xl p-6 space-y-6">
-                <h2 class="text-xl font-semibold border-b pb-2">Basic Information</h2>
+                <h2 class="text-xl font-semibold border-b pb-2 text-primary">Basic Information</h2>
 
                 <div class="grid md:grid-cols-2 gap-5">
                     <div>
@@ -57,7 +57,7 @@
 
             <!-- Address -->
             <div class="bg-base-100 shadow rounded-xl p-6 space-y-6">
-                <h2 class="text-xl font-semibold border-b pb-2">Address & Details</h2>
+                <h2 class="text-xl font-semibold border-b pb-2 text-primary">Address & Details</h2>
 
                 <div class="grid md:grid-cols-3 gap-5">
 

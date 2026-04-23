@@ -21,8 +21,7 @@
                     <label class="label font-medium">Bond Series</label>
                     <input type="text" name="bondSeries"
                         class="input input-bordered w-full focus:input-primary @error('bondSeries') input-error @enderror"
-                        placeholder="e.g. KA" value="{{ old('bondSeries', $bond->bondSeries) }}"
-                        oninput="this.value = this.value.toUpperCase()" required>
+                        placeholder="e.g. KA" value="{{ old('bondSeries', $bond->bondSeries) }}" required>
                     <x-forms.error name="bondSeries" />
                 </div>
 

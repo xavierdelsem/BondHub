@@ -3,7 +3,6 @@
 use App\Http\Controllers\BondController;
 use App\Http\Controllers\DrawController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Draw;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -19,5 +18,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/bonds', [BondController::class, 'index'])->name('bonds.index');
     Route::post('/draws', [DrawController::class, 'store'])->name('draws.store');
     Route::get('/draws', [DrawController::class, 'index'])->name('draws.index');
-    Route::resource('admin', DrawController::class);
+    Route::resource('draw', DrawController::class);
+    // Route::delete('/draws/')
 });

@@ -49,7 +49,7 @@ class DrawController extends Controller
 
         Auth::user()->draws()->create($validated);
 
-        (new Bond)->updateStatus();
+        Bond::updateStatus();
 
         return redirect()->route('draws.index')->with('success', 'Bond Published successfully.');
     }
@@ -84,6 +84,8 @@ class DrawController extends Controller
     public function destroy(Draw $draw)
     {
         $draw->delete();
+
+        Bond::updateStatus();
 
         return redirect()->route('draws.index')
             ->with('success', 'Record deleted successfully');

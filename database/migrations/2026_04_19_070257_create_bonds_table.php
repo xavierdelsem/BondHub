@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('bonds', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->unsignedInteger('bondNumber');
+            $table->unsignedInteger('bondNumber')->unique();
             $table->string('bondSeries');
             $table->date('buying_date')->nullable();
             $table->boolean('isPrizeWon')->nullable();

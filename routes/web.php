@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BondController;
 use App\Http\Controllers\DrawController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,5 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/draws', [DrawController::class, 'store'])->name('draws.store');
     Route::get('/draws', [DrawController::class, 'index'])->name('draws.index');
     Route::resource('draw', DrawController::class);
+
+    Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::patch('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
     // Route::delete('/draws/')
 });

@@ -56,3 +56,49 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+## Project Features and Processes
+
+BondHub is a specialized platform designed to automate the management and prize-tracking of Bangladesh Bank Prize Bonds. Below are the core features and their underlying technical processes.
+
+### 1. User Account & KYC Management
+
+The system maintains comprehensive user profiles necessary for official prize claims as required by banking regulations.
+
+- **Registration**: Users provide standard credentials (name, email, password).
+- **Extended Profile (KYC)**: To facilitate claim form generation, the system collects detailed attributes such as nationality, occupation, bank account details (Bank Name, Branch, Account Number), and address details (Village, Post, Thana, Zilla).
+- **Relationships**: Users can manage "Relation" data, which is often required for specific bond claim categories.
+
+### 2. Bond Portfolio Management
+
+Users can register and maintain a digital inventory of their physical prize bonds.
+
+- **Data Points**: The system tracks the Bond Number, Series, and the Date of Purchase.
+- **Ownership**: Each bond is linked to a `User` model via Eloquent relationships, ensuring that notifications are routed to the correct owner.
+
+### 3. Automated Prize Winner Identification
+
+The application features a centralized process to check all registered bonds against official draw results. This is handled by the `Bond::updateStatus()` method:
+
+- **Draw Syncing**: It retrieves a map of all winning numbers and their prize positions from the `draws` table.
+- **Integrity Check**: It automatically resets the status of bonds that no longer match winning numbers (handling edge cases like draw data updates or corrections).
+- **Winner Scanning**: It identifies bonds in the system that match current winning numbers and have not yet been flagged as winners.
+- **Status Update**: It updates the `isPrizeWon` status in the database to ensure tracking is current and to prevent duplicate alerts.
+
+### 4. Multi-Channel Notification Workflow
+
+Once a win is confirmed, the system triggers the `AlertWinner` notification process:
+
+- **Dynamic Channel Routing**: The system checks the user's available contact methods. It always logs the win to the **Database Channel** for in-app history and conditionally sends an email via the **Mail Channel** if a valid email address is present.
+- **Personalized Messaging**: Notifications include the specific bond number and the prize rank (e.g., 1st prize, 2nd prize).
+- **Email Delivery**: Emails are dispatched using SMTP (configured for services like Mailtrap in development). The email includes a personalized greeting and a direct link to the official Bangladesh Bank claim form PDF.
+- **Database Persistence**: Winners can view their prize history and messages within the application's notification interface at any time.
+
+### 5. Claim Assistance
+
+The system bridges the gap between winning and claiming the prize.
+
+- **Document Access**: Every win notification provides immediate access to the official legal documentation required for the claim.
+- **Data Readiness**: Because the user profile captures bank and address details, the application maintains the necessary data to assist users in preparing for submission to designated bank branches.

@@ -35,9 +35,14 @@ class BondController extends Controller
         ]);
 
         Auth::user()->bonds()->create($request->all());
+        $count = Bond::updateStatus();
+
+        $message = $count > 0
+            ? "Bond Inserted successfully! Found {$count} prize matches."
+            : 'Bond Inserted successfully.';
 
         return redirect()->route('bonds.index')
-            ->with('success', 'Bond Inserted successfully.');
+            ->with('success', $message);
     }
 
     public function show(Bond $bond)
@@ -53,16 +58,20 @@ class BondController extends Controller
     public function update(Request $request, Bond $bond)
     {
         $request->validate([
-            'bondNumber' => 'required|integer',
+            'bondNumber' => 'required|integer|digits:7',
             'bondSeries' => 'required|string',
             'buying_date' => 'nullable|date',
         ]);
 
         $bond->update($request->all());
-        $updated = $bond->updateStatus();
+        $count = Bond::updateStatus();
+
+        $message = $count > 0
+            ? "Bond updated successfully! Found {$count} new prize matches."
+            : 'Bond updated successfully.';
 
         return redirect()->route('bonds.index')
-            ->with('success', $updated);
+            ->with('success', $message);
     }
 
     public function destroy(Bond $bond)

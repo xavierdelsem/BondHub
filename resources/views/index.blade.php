@@ -35,7 +35,8 @@
                                 {{ $bond->isPrizeWon ? 'Winner' : 'No Prize' }}
                             </span>
                         </td>
-                        <td class="text-center"><button type="button" class="btn btn-xs btn-outline" {{ $bond->isPrizeWon ? '' : 'disabled'}}>Claim</button>
+                        <td class="text-center"><a href="https://www.bb.org.bd/services/forms/pbond_claimform.doc"
+                                type="button" class="btn btn-xs btn-outline" {{ $bond->isPrizeWon ? '' : 'disabled'}}>Claim</a>
                         </td>
                         <td class="text-right">
                             <div class="flex justify-end gap-2">
